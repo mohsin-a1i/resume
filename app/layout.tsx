@@ -1,6 +1,8 @@
+import '../styles/globals.css'
+
+import { ThemeProvider } from "components/theme-provider"
 import { Viewport } from 'next'
-import { ReactNode } from 'react'
-import '../styles/global.css'
+import { Header } from './header'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -9,16 +11,19 @@ export const viewport: Viewport = {
   maximumScale: 1
 }
 
-interface RootLayoutProps {
-  children: ReactNode
-}
-
-export default function MainLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: React.PropsWithChildren) {
  
   return (
-    <html lang="en" className='dark'>
-      <body className=''>
-        {children}
+    <html lang="en">
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          <Header/>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
