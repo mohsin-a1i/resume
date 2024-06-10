@@ -32,7 +32,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
           enableSystem
         >
           <Header/>
-          {children}
+          <main>{children}</main>
         </ThemeProvider>
       </body>
     </html>

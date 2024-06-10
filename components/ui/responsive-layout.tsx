@@ -7,10 +7,8 @@ interface ResponsiveLayoutProps {
 
 export function ResponsiveLayout({ className, children }: React.PropsWithChildren<ResponsiveLayoutProps>) {
   return (
-    <div className='p-4 flex justify-center'>
-      <div className={cn("w-full max-w-screen-lg", className)}>
-        {children}
-      </div>
+    <div className={cn("m-auto w-full max-w-screen-lg", className)}>
+      {children}
     </div>
   )
 }

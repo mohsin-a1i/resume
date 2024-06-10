@@ -3,8 +3,11 @@ import { DarkModeMenu } from "./dark-mode-menu";
 
 export function Header() {
   return (
-    <ResponsiveLayout>
-      <DarkModeMenu className="float-end"/>
-    </ResponsiveLayout>
+    <header className="sticky top-0 border-b border-border bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50">
+      <ResponsiveLayout className="p-2 flex">
+        <DarkModeMenu className="ml-auto"/>
+      </ResponsiveLayout>
+    </header>
+
   )
 }
