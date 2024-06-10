@@ -1,14 +1,14 @@
 "use client"
- 
+
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
- 
+
 import { Button } from "components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "components/ui/dropdown-menu"
- 
-export function DarkModeMenu({ className }: React.ComponentPropsWithoutRef<typeof DropdownMenuTrigger>) {
+
+export const DarkModeMenu = ({ className }: React.ComponentPropsWithoutRef<typeof DropdownMenuTrigger>) => {
   const { setTheme } = useTheme()
- 
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={className} asChild>
