@@ -2,7 +2,8 @@ import { FlipSentences } from "components/ui/fllip-sentences";
 
 export const Introduction = () => {
   return (
-    <section className="text-center">
+    <section className="relative bg-background bg-dot-black/[0.2] dark:bg-dot-white/[0.2] p-6 text-center">
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
       <p className="text-muted-foreground leading-relaxed">This is</p>
       <h1 className="scroll-m-20 text-4xl font-extrabold leading-relaxed tracking-tight lg:text-5xl">
         Mohsin Ali

@@ -4,9 +4,9 @@ import { Introduction } from "./introduction";
 
 export default function RootPage() {
   return (
-    <ResponsiveLayout className="p-4">
+    <ResponsiveLayout>
       <Introduction />
-      <ContactForm className="mt-12" />
+      <ContactForm />
     </ResponsiveLayout>
   )
 }
