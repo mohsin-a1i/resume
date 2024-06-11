@@ -63,7 +63,7 @@ export const FlipSentences = ({ className, sentences, duration = 3000 }: FlipSen
       >
         {currentSentence.split("").map((letter, index) => (
           <motion.span
-            key={currentSentence + index}
+            key={`sentence-${currentSentence}-${index}`}
             initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{

@@ -11,7 +11,7 @@ interface ContactProps {
 
 export const Contact = ({ className }: ContactProps) => {
   return (
-    <section id='contact' className={cn("m-auto max-w-md p-6", className)}>
+    <section id='contact' className={cn("m-auto max-w-lg p-6", className)}>
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
         Lets work together
       </h3>
