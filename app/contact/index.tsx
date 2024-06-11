@@ -5,13 +5,13 @@ import { Textarea } from "components/ui/textarea"
 import { cn } from "lib/utils"
 import { Send } from "lucide-react"
 
-interface ContactFormProps {
+interface ContactProps {
   className?: string
 }
 
-export const ContactForm = ({ className }: ContactFormProps) => {
+export const Contact = ({ className }: ContactProps) => {
   return (
-    <section className={cn("m-auto max-w-md p-6", className)}>
+    <section id='contact' className={cn("m-auto max-w-md p-6", className)}>
       <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
         Lets work together
       </h3>

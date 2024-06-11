@@ -1,12 +1,11 @@
-import { ResponsiveLayout } from "components/ui/responsive-layout";
-import { ContactForm } from "./contact-form";
+import { Contact } from "./contact";
 import { Introduction } from "./introduction";
 
 export default function RootPage() {
   return (
-    <ResponsiveLayout>
+    <>
       <Introduction />
-      <ContactForm />
-    </ResponsiveLayout>
+      <Contact />
+    </>
   )
 }
