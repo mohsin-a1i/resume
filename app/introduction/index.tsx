@@ -1,23 +1,27 @@
 import { FlipSentences } from "components/ui/fllip-sentences";
+import { cn } from "lib/utils";
 
-export const Introduction = () => {
+interface IntroductionProps {
+  className: string
+}
+
+export const Introduction = ({ className }: IntroductionProps) => {
   return (
-    <section className="py-24 px-6 text-center">
-      <p className="text-muted-foreground leading-relaxed">This is</p>
-      <h1 className="scroll-m-20 text-4xl font-extrabold leading-relaxed tracking-tight lg:text-5xl">
+    <section id='introduction' className={cn("py-24 px-6 text-center", className)}>
+      <h1 className="text-4xl font-extrabold leading-relaxed tracking-tight lg:text-5xl">
         Mohsin Ali
       </h1>
-      <p className="leading-relaxed">
-        <span className="text-muted-foreground">A full stack developer that has worked</span>
-        <FlipSentences
-          className="px-2 text-foreground"
-          sentences={[
-            'as a freelancer',
-            'in startups',
-            'in corporations'
-          ]}
-        />
+      <p className="mt-1">
+        A full stack developer that has worked
       </p>
+      <FlipSentences
+        className="block text-primary"
+        sentences={[
+          "as a freelancer",
+          "in startups",
+          "in corporations"
+        ]}
+      />
     </section>
   )
 }

@@ -9,7 +9,7 @@ export const Navigation = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href='#' legacyBehavior passHref>
+          <Link href='#introduction' legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               <Logo className="h-6 w-6" />
             </NavigationMenuLink>

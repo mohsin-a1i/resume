@@ -12,10 +12,10 @@ interface ContactProps {
 export const Contact = ({ className }: ContactProps) => {
   return (
     <section id='contact' className={cn("m-auto max-w-lg p-6", className)}>
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+      <h3 className="text-2xl font-semibold tracking-tight">
         Lets work together
       </h3>
-      <p className="text-sm text-muted-foreground">Shoot me a quick email and I'll get back to you as soon as I can</p>
+      <p className="mt-1 text-sm text-muted-foreground">Shoot me a quick email and I&apos;ll get back to you as soon as I can</p>
       <form className="mt-4 grid grid-cols-2 gap-4">
         <div className="col-span-1 space-y-1">
           <Label htmlFor="name">Name</Label>

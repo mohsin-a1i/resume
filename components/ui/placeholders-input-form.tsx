@@ -12,17 +12,11 @@ interface PlaceholdersInputProps {
   onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-export function PlaceholdersInput({ className, placeholders, onChange, onSubmit }: PlaceholdersInputProps) {
-  const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
+export function PlaceholdersInputForm({ className, placeholders, onChange, onSubmit }: PlaceholdersInputProps) {
+  const [placeholder, setPlaceholder] = useState(0);
 
   useEffect(() => {
-    let interval: any;
-    const startAnimation = () => {
-      interval = setInterval(() => {
-        setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
-      }, 1500);
-    };
-    startAnimation();
+    const interval = setInterval(() => setPlaceholder(index => (index + 1) % placeholders.length), 3000);
     return () => clearInterval(interval);
   }, [placeholders.length]);
 
@@ -133,10 +127,6 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
     animateFrame(start);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !animating) vanishAndSubmit();
-  };
-
   const vanishAndSubmit = () => {
     setAnimating(true);
     draw();
@@ -160,7 +150,7 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
   return (
     <form
       className={cn(
-        "relative border rounded-full p-2 flex overflow-hidden",
+        "relative bg-background border rounded-full p-2 flex overflow-hidden",
         className
       )}
       onSubmit={handleSubmit}
@@ -168,7 +158,7 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
       <canvas
         className={cn(
           "absolute pointer-events-none transform scale-50 origin-top-left filter invert dark:invert-0 pr-20",
-          !animating ? "opacity-0" : "opacity-100"
+          animating ? "opacity-100" : "opacity-0"
         )}
         ref={canvasRef}
       />
@@ -179,7 +169,6 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
           setValue(e.target.value);
           onChange && onChange(e);
         }}
-        onKeyDown={handleKeyDown}
         ref={inputRef}
         value={value}
         type="text"
@@ -192,7 +181,7 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
       <button
         disabled={!value}
         type="submit"
-        className="h-8 w-8 rounded-full bg-accent disabled:bg-background flex items-center justify-center transition duration-200"
+        className="h-8 w-8 rounded-full bg-primary disabled:bg-background flex items-center justify-center transition duration-200"
       >
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
@@ -230,7 +219,7 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
         <AnimatePresence mode="wait">
           {!value && (
             <motion.p
-              key={`placeholder-${currentPlaceholder}`}
+              key={placeholder}
               initial={{
                 y: 5,
                 opacity: 0,
@@ -240,7 +229,7 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
                 opacity: 1,
               }}
               exit={{
-                y: -15,
+                y: -5,
                 opacity: 0,
               }}
               transition={{
@@ -249,7 +238,7 @@ export function PlaceholdersInput({ className, placeholders, onChange, onSubmit 
               }}
               className="text-sm text-muted-foreground"
             >
-              {placeholders[currentPlaceholder]}
+              {placeholders[placeholder]}
             </motion.p>
           )}
         </AnimatePresence>

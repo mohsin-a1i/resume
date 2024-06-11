@@ -3,43 +3,28 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 
-import { cn } from "lib/utils";
-
 interface FlipSentencesProps {
   className?: string
   sentences: string[]
   duration?: number
 }
 
-export const FlipSentences = ({ className, sentences, duration = 3000 }: FlipSentencesProps) => {
-  const [currentSentence, setCurrentSentence] = useState(sentences[0]);
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+export const FlipSentences = ({ className, sentences, duration = 4000 }: FlipSentencesProps) => {
+  const [sentence, setSentence] = useState<string>(sentences[0])
 
-  const startAnimation = useCallback(() => {
-    const word = sentences[sentences.indexOf(currentSentence) + 1] || sentences[0];
-    setCurrentSentence(word);
-    setIsAnimating(true);
-  }, [currentSentence, sentences]);
+  const selectSentence = useCallback(() => {
+    const index = (sentences.indexOf(sentence) + 1) % sentences.length
+    setSentence(sentences[index])
+  }, [sentences, sentence])
 
   useEffect(() => {
-    if (!isAnimating) setTimeout(startAnimation, duration);
-  }, [isAnimating, duration, startAnimation]);
+    const timeout = setTimeout(selectSentence, duration)
+    return () => clearTimeout(timeout)
+  }, [duration, selectSentence])
 
   return (
-    <AnimatePresence
-      onExitComplete={() => {
-        setIsAnimating(false);
-      }}
-    >
+    <AnimatePresence mode="wait">
       <motion.span
-        initial={{
-          opacity: 0,
-          y: 10,
-        }}
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
         transition={{
           duration: 0.4,
           ease: "easeInOut",
@@ -49,21 +34,15 @@ export const FlipSentences = ({ className, sentences, duration = 3000 }: FlipSen
         }}
         exit={{
           opacity: 0,
-          y: -40,
-          x: 40,
           filter: "blur(8px)",
-          scale: 2,
-          position: 'absolute'
+          scale: 1.5
         }}
-        className={cn(
-          "relative",
-          className
-        )}
-        key={currentSentence}
+        className={className}
+        key={sentence}
       >
-        {currentSentence.split("").map((letter, index) => (
+        {sentence.split("").map((letter, index) => (
           <motion.span
-            key={`sentence-${currentSentence}-${index}`}
+            key={index}
             initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{

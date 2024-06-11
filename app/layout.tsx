@@ -1,14 +1,14 @@
-import '../styles/globals.css'
+import "../styles/globals.css"
 
 import { ThemeProvider } from "components/theme-provider"
-import { cn } from 'lib/utils'
-import { Viewport } from 'next'
+import { cn } from "lib/utils"
+import { Viewport } from "next"
 import { Inter as FontSans } from "next/font/google"
-import { Footer } from './footer'
-import { Header } from './header'
+import { Footer } from "./footer"
+import { Header } from "./header"
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   minimumScale: 1,
   maximumScale: 1

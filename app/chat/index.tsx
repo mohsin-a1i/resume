@@ -1,4 +1,4 @@
-import { PlaceholdersInput } from "components/ui/placeholders-input"
+import { PlaceholdersInputForm } from "components/ui/placeholders-input-form"
 import { cn } from "lib/utils"
 
 interface ChatProps {
@@ -8,24 +8,24 @@ interface ChatProps {
 export const Chat = ({ className }: ChatProps) => {
   return (
     <section id='chat' className={cn("m-auto max-w-lg p-6", className)}>
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+      <h3 className="text-2xl font-semibold tracking-tight">
         Digital Me
       </h3>
-      <p className="text-sm text-muted-foreground">Want to ask something quick? Talk to a digital version of me</p>
+      <p className="mt-1 text-sm text-muted-foreground">Want to ask something quick? Talk to a digital version of me</p>
       <div className="mt-4 flex flex-col">
         <div className="m-2 self-start bg-card border rounded-full py-2 px-4 text-sm">
-          Hey what can I help you with?
+          Hi! What would you like to know?
         </div>
         <div className="m-2 self-end bg-card border rounded-full py-2 px-4 text-sm">
           What is your name?
         </div>
       </div>
-      <PlaceholdersInput
+      <PlaceholdersInputForm
         className='mt-4'
         placeholders={[
-          'Have you worked with Kafka?',
-          'Do you speak spanish?',
-          'How many years of expirence do you have?'
+          "Have you worked with Kafka?",
+          "Do you speak spanish?",
+          "How many years of expirence do you have?"
         ]}
       />
     </section>
