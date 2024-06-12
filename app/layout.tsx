@@ -1,7 +1,7 @@
 import "../styles/globals.css"
 
 import { ThemeProvider } from "components/theme-provider"
-import { cn } from "lib/utils"
+import { cn } from "lib/cn"
 import { Viewport } from "next"
 import { Inter as FontSans } from "next/font/google"
 import { Footer } from "./footer"

@@ -1,5 +1,5 @@
 import { PlaceholdersInputForm } from "components/ui/placeholders-input-form"
-import { cn } from "lib/utils"
+import { cn } from "lib/cn"
 
 interface ChatProps {
   className?: string

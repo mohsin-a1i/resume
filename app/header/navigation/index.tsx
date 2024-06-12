@@ -1,7 +1,4 @@
-"use client"
-
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "components/ui/navigation-menu"
-import Link from "next/link"
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "components/ui/navigation-menu"
 import { Logo } from "./logo"
 
 export const Navigation = () => {
@@ -9,25 +6,19 @@ export const Navigation = () => {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href='#introduction' legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              <Logo className="h-6 w-6" />
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink href='#introduction'>
+            <Logo className="h-6 w-6" />
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href='#chat' legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Digital Me
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink href='#chat'>
+            Digital Me
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href='#contact' legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Lets Work
-            </NavigationMenuLink>
-          </Link>
+          <NavigationMenuLink href='#contact'>
+            Lets Work
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

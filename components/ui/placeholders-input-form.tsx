@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "lib/cn";
 import { useCallback, useEffect, useRef, useState } from "react";
-
-import { cn } from "lib/utils";
 
 interface PlaceholdersInputProps {
   className: string,

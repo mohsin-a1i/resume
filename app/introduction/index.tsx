@@ -1,5 +1,5 @@
 import { FlipSentences } from "components/ui/fllip-sentences";
-import { cn } from "lib/utils";
+import { cn } from "lib/cn";
 
 interface IntroductionProps {
   className: string
