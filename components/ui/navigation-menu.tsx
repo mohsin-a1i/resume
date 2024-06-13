@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 
-const NavigationMenu = React.forwardRef<
+const NavigationMenuRoot = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
 >(({ className, children, ...props }, ref) => (
@@ -22,7 +22,7 @@ const NavigationMenu = React.forwardRef<
     <NavigationMenuViewport />
   </NavigationMenuPrimitive.Root>
 ))
-NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
+NavigationMenuRoot.displayName = NavigationMenuPrimitive.Root.displayName
 
 const NavigationMenuList = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.List>,
@@ -127,7 +127,5 @@ const NavigationMenuIndicator = React.forwardRef<
 ))
 NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName
 
-export {
-  NavigationMenu, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuViewport
-}
+export { NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot, NavigationMenuTrigger, NavigationMenuViewport }
 

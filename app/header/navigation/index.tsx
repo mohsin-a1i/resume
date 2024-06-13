@@ -1,9 +1,9 @@
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "components/ui/navigation-menu"
+import { NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot } from "components/ui/navigation-menu"
 import { Logo } from "./logo"
 
 export const Navigation = () => {
   return (
-    <NavigationMenu>
+    <NavigationMenuRoot>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink href='#introduction'>
@@ -21,6 +21,6 @@ export const Navigation = () => {
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
-    </NavigationMenu>
+    </NavigationMenuRoot>
   )
 }
