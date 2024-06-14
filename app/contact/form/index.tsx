@@ -1,11 +1,13 @@
 "use client"
-import { FormControl, FormField, FormLabel, FormRoot, FormSubmit } from "components/ui/form"
+
+import { Action, FormControl, FormField, FormLabel, FormRoot, FormSubmit } from "components/ui/form"
 import { Send } from "lucide-react"
+import { email } from "./actions/email"
 
 export const ContactForm = () => {
 
   return (
-    <FormRoot className="mt-4 grid grid-cols-2 gap-4">
+    <FormRoot className="mt-4 grid grid-cols-2 gap-4" action={email as Action}>
       <FormField name='name' className="col-span-1">
         <FormLabel>Name</FormLabel>
         <FormControl placeholder="Name" />
