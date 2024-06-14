@@ -1,11 +1,12 @@
 "use client"
 
+import { Button } from "components/ui/button"
 import { Action, FormControl, FormField, FormLabel, FormRoot, FormSubmit } from "components/ui/form"
+import { LoadingSpinner } from "components/ui/loading-spinner"
 import { Send } from "lucide-react"
 import { email } from "./actions/email"
 
 export const ContactForm = () => {
-
   return (
     <FormRoot className="mt-4 grid grid-cols-2 gap-4" action={email as Action}>
       <FormField name='name' className="col-span-1">
@@ -23,8 +24,17 @@ export const ContactForm = () => {
         </FormControl>
       </FormField>
       <FormSubmit className="col-span-2">
-        <span>Send</span>
-        <Send className="ml-2 h-4 w-4" />
+        {(pending) => (
+          <Button>
+            {pending ? (<>
+              <LoadingSpinner className='mr-2 h-4 w-4' />
+              <span>Sending</span>
+            </>) : (<>
+              <span>Send</span>
+              <Send className="ml-2 h-4 w-4" />
+            </>)}
+          </Button>
+        )}
       </FormSubmit>
     </FormRoot>
   )

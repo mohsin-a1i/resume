@@ -5,9 +5,8 @@ import { ActionState } from "lib/actions"
 import { cn } from "lib/cn"
 import _ from "lodash"
 import React, { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useRef } from "react"
-import { useFormState } from "react-dom"
+import { useFormState, useFormStatus } from "react-dom"
 import { ZodFormattedError, z } from "zod"
-import { Button, ButtonProps } from "./button"
 import { useToast } from "./use-toast"
 
 type FormContext = { error?: ZodFormattedError<z.infer<z.AnyZodObject>> }
@@ -16,17 +15,17 @@ export const useForm = () => useContext(FormContext)
 
 export type Action = Parameters<typeof useFormState<ActionState<z.AnyZodObject>>>[0]
 
-type FormProps = {
+type FormRootProps = {
   defaultData?: Record<string, any>
   action: Action
 } & React.ComponentPropsWithoutRef<typeof FormPrimitive.Root>
 
-export const FormRoot = (({ className, action, defaultData, children, ...props }: FormProps) => {
+export const FormRoot = (({ className, action, defaultData, children, ...props }: FormRootProps) => {
   const ref = useRef<HTMLFormElement>(null)
-  const [state, formAction] = useFormState<ActionState<z.AnyZodObject>>(action, {})
-  const { message, error } = state
   const { toast } = useToast()
+  const [state, formAction] = useFormState<ActionState<z.AnyZodObject>>(action, {})
 
+  //Set default form data
   useEffect(() => {
     const form = ref.current
     if (!form) return
@@ -39,24 +38,28 @@ export const FormRoot = (({ className, action, defaultData, children, ...props }
     }
   }, [defaultData])
 
+  //Reset form on successful action
   useEffect(() => {
     const form = ref.current
     if (!form) return
+    const message = state.message
     if (!message) return
 
     toast({ description: message })
     form.reset()
-  }, [message, toast])
+  }, [state, toast])
 
+
+  //Show non-validation error
   useEffect(() => {
-    const actionError = state.error?._errors?.[0]
-    if (!actionError) return
+    const error = state.error?._errors?.[0]
+    if (!error) return
 
-    toast({ title: "Error", description: actionError, variant: "destructive" })
+    toast({ title: "Error", description: error, variant: "destructive" })
   }, [state, toast])
 
   return (
-    <FormContext.Provider value={{ error }}>
+    <FormContext.Provider value={{ error: state.error }}>
       <FormPrimitive.Root
         ref={ref}
         className={className}
@@ -169,20 +172,25 @@ FormMessage.displayName = FormPrimitive.Message.displayName
 
 export const FormValidityState = FormPrimitive.ValidityState
 
+type FormSubmitProps = {
+  children: (pending: boolean) => ReactNode
+} & Omit<React.ComponentPropsWithoutRef<typeof FormPrimitive.Submit>, "children">
+
 export const FormSubmit = React.forwardRef<
   React.ElementRef<typeof FormPrimitive.Submit>,
-  React.ComponentPropsWithoutRef<typeof FormPrimitive.Submit> & ButtonProps
+  FormSubmitProps
 >(({ className, children, ...props }, ref) => {
+  const { pending } = useFormStatus()
+
   return (
     <FormPrimitive.Submit
       ref={ref}
       className={className}
+      disabled={pending}
       {...props}
       asChild
     >
-      <Button>
-        {children}
-      </Button>
+      {children(pending)}
     </FormPrimitive.Submit>
   )
 })

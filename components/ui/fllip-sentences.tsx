@@ -10,21 +10,25 @@ interface FlipSentencesProps {
 }
 
 export const FlipSentences = ({ className, sentences, duration = 4000 }: FlipSentencesProps) => {
-  const [sentence, setSentence] = useState<string>(sentences[0])
+  const [index, setIndex] = useState(0)
+  const [sentence, setSentence] = useState<string | null>(sentences[index])
 
   const selectSentence = useCallback(() => {
-    const index = (sentences.indexOf(sentence) + 1) % sentences.length
-    setSentence(sentences[index])
-  }, [sentences, sentence])
+    const i = (index + 1) % sentences.length
+    setIndex(i)
+    setSentence(sentences[i])
+  }, [index, sentences])
 
   useEffect(() => {
-    const timeout = setTimeout(selectSentence, duration)
+    const timeout = setTimeout(() => setSentence(null), duration)
     return () => clearTimeout(timeout)
   }, [duration, selectSentence])
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.span
+    <AnimatePresence onExitComplete={selectSentence}>
+      {sentence && <motion.span
+        key={sentence}
+        className={className}
         transition={{
           duration: 0.4,
           ease: "easeInOut",
@@ -37,12 +41,10 @@ export const FlipSentences = ({ className, sentences, duration = 4000 }: FlipSen
           filter: "blur(8px)",
           scale: 1.5
         }}
-        className={className}
-        key={sentence}
       >
         {sentence.split("").map((letter, index) => (
           <motion.span
-            key={index}
+            key={`${sentence} ${index}`}
             initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
@@ -53,7 +55,7 @@ export const FlipSentences = ({ className, sentences, duration = 4000 }: FlipSen
             {letter}
           </motion.span>
         ))}
-      </motion.span>
+      </motion.span>}
     </AnimatePresence>
   );
 };
