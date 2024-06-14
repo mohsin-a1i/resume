@@ -1,6 +1,7 @@
 import "../styles/globals.css"
 
 import { ThemeProvider } from "components/theme-provider"
+import { Toaster } from "components/ui/toaster"
 import { cn } from "lib/cn"
 import { Viewport } from "next"
 import { Inter as FontSans } from "next/font/google"
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
             {children}
           </main>
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

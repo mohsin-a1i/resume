@@ -5,9 +5,11 @@ import { errorMap } from "lib/zod/error-map"
 import z from "zod"
 
 const emailSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
-  message: z.string().min(1)
+  name: z.string().min(1, { message: "What do I call you?" }),
+  email: z.string()
+    .min(1, { message: "Need an email address to get back to you" })
+    .email({ message: "The email address doesn't seem to be correct" }),
+  message: z.string().min(1, { message: "What should we work on?" })
 })
 
 export async function email(currentState: ActionState<typeof emailSchema>, actionData: FormData): Promise<ActionState<typeof emailSchema>> {

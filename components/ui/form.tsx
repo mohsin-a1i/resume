@@ -22,19 +22,10 @@ type FormProps = {
 } & React.ComponentPropsWithoutRef<typeof FormPrimitive.Root>
 
 export const FormRoot = (({ className, action, defaultData, children, ...props }: FormProps) => {
-  const [{ message, error }, formAction] = useFormState<ActionState<z.AnyZodObject>>(action, {})
-
   const ref = useRef<HTMLFormElement>(null)
+  const [state, formAction] = useFormState<ActionState<z.AnyZodObject>>(action, {})
+  const { message, error } = state
   const { toast } = useToast()
-
-  useEffect(() => {
-    const form = ref.current
-    if (!form) return
-    if (!message) return
-
-    toast({ description: message })
-    form.reset()
-  }, [message, toast])
 
   useEffect(() => {
     const form = ref.current
@@ -47,6 +38,22 @@ export const FormRoot = (({ className, action, defaultData, children, ...props }
       input.value = value
     }
   }, [defaultData])
+
+  useEffect(() => {
+    const form = ref.current
+    if (!form) return
+    if (!message) return
+
+    toast({ description: message })
+    form.reset()
+  }, [message, toast])
+
+  useEffect(() => {
+    const actionError = state.error?._errors?.[0]
+    if (!actionError) return
+
+    toast({ title: "Error", description: actionError, variant: "destructive" })
+  }, [state, toast])
 
   return (
     <FormContext.Provider value={{ error }}>

@@ -18,7 +18,7 @@ export const ContactForm = () => {
       </FormField>
       <FormField name='message' className="col-span-2">
         <FormLabel>Message</FormLabel>
-        <FormControl placeholder="What should we work on?" asChild>
+        <FormControl asChild>
           <textarea rows={3} />
         </FormControl>
       </FormField>
