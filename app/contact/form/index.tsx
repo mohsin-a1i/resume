@@ -1,14 +1,14 @@
 "use client"
 
 import { Button } from "components/ui/button"
-import { Action, FormControl, FormField, FormLabel, FormRoot, FormSubmit } from "components/ui/form"
+import { FormControl, FormField, FormLabel, FormMessage, FormRoot, FormSubmit } from "components/ui/form"
 import { LoadingSpinner } from "components/ui/loading-spinner"
 import { Send } from "lucide-react"
 import { email } from "./actions/email"
 
 export const ContactForm = () => {
   return (
-    <FormRoot className="mt-4 grid grid-cols-2 gap-4" action={email as Action}>
+    <FormRoot className="mt-4 grid grid-cols-2 gap-4" action={email}>
       <FormField name='name' className="col-span-1">
         <FormLabel>Name</FormLabel>
         <FormControl placeholder="Name" />
@@ -22,6 +22,9 @@ export const ContactForm = () => {
         <FormControl asChild>
           <textarea rows={3} />
         </FormControl>
+        <FormMessage>
+          A brief introduction of yourself
+        </FormMessage>
       </FormField>
       <FormSubmit className="col-span-2">
         {(pending) => (

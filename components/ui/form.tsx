@@ -13,17 +13,15 @@ type FormContext = { error?: ZodFormattedError<z.infer<z.AnyZodObject>> }
 const FormContext = createContext<FormContext>({})
 export const useForm = () => useContext(FormContext)
 
-export type Action = Parameters<typeof useFormState<ActionState<z.AnyZodObject>>>[0]
-
 type FormRootProps = {
   defaultData?: Record<string, any>
-  action: Action
-} & React.ComponentPropsWithoutRef<typeof FormPrimitive.Root>
+  action: (state: Awaited<ActionState>, actionData: FormData) => ActionState | Promise<ActionState>,
+} & Omit<React.ComponentPropsWithoutRef<typeof FormPrimitive.Root>, "action">
 
 export const FormRoot = (({ className, action, defaultData, children, ...props }: FormRootProps) => {
   const ref = useRef<HTMLFormElement>(null)
   const { toast } = useToast()
-  const [state, formAction] = useFormState<ActionState<z.AnyZodObject>>(action, {})
+  const [state, formAction] = useFormState(action, {})
 
   //Set default form data
   useEffect(() => {
