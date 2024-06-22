@@ -1,67 +1,53 @@
 "use client"
 
 import * as FormPrimitive from "@radix-ui/react-form"
-import { ActionState } from "lib/actions"
+import { ActionState } from "components/actions/builder"
+import { ActionStatus, useAction } from "components/actions/use-action"
 import { cn } from "lib/cn"
 import _ from "lodash"
 import React, { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useRef } from "react"
-import { useFormState, useFormStatus } from "react-dom"
-import { ZodFormattedError, z } from "zod"
 import { useToast } from "./use-toast"
 
-type FormContext = { error?: ZodFormattedError<z.infer<z.AnyZodObject>> }
-const FormContext = createContext<FormContext>({})
+type FormContext = { status: ActionStatus, error?: { _errors: string[] } }
+const FormContext = createContext<FormContext>({ status: "idle" })
 export const useForm = () => useContext(FormContext)
 
 type FormRootProps = {
   defaultData?: Record<string, any>
-  action: (state: Awaited<ActionState>, actionData: FormData) => ActionState | Promise<ActionState>,
+  onSuccess: (data: any) => void
+  action: (state: ActionState, payload: FormData) => Promise<ActionState>,
 } & Omit<React.ComponentPropsWithoutRef<typeof FormPrimitive.Root>, "action">
 
-export const FormRoot = (({ className, action, defaultData, children, ...props }: FormRootProps) => {
+export const FormRoot = (({ className, action, defaultData, onSuccess, children, ...props }: FormRootProps) => {
   const ref = useRef<HTMLFormElement>(null)
   const { toast } = useToast()
-  const [state, formAction] = useFormState(action, {})
 
-  //Set default form data
+  const { execute, status, validationErrors } = useAction(action, {
+    onSuccess: (data) => {
+      ref.current?.reset()
+      onSuccess(data)
+    },
+    onServerError: (serverError) => {
+      toast({ title: "Error", description: serverError, variant: "destructive" })
+    }
+  })
+
   useEffect(() => {
-    const form = ref.current
-    if (!form) return
     if (!defaultData) return
 
     for (const [name, value] of Object.entries(defaultData)) {
-      const input = form.elements.namedItem(name) as HTMLInputElement
+      const input = ref.current?.elements.namedItem(name)
       if (!input) continue
-      input.value = value
+      (input as HTMLInputElement).value = value
     }
   }, [defaultData])
 
-  //Reset form on successful action
-  useEffect(() => {
-    const form = ref.current
-    if (!form) return
-    const message = state.message
-    if (!message) return
-
-    toast({ description: message })
-    form.reset()
-  }, [state, toast])
-
-
-  //Show non-validation error
-  useEffect(() => {
-    const error = state.error?._errors?.[0]
-    if (!error) return
-
-    toast({ title: "Error", description: error, variant: "destructive" })
-  }, [state, toast])
-
   return (
-    <FormContext.Provider value={{ error: state.error }}>
+    <FormContext.Provider value={{ status, error: validationErrors }}>
       <FormPrimitive.Root
         ref={ref}
         className={className}
-        action={formAction}
+        action={execute}
         {...props}
       >
         {children}
@@ -171,24 +157,24 @@ FormMessage.displayName = FormPrimitive.Message.displayName
 export const FormValidityState = FormPrimitive.ValidityState
 
 type FormSubmitProps = {
-  children: (pending: boolean) => ReactNode
+  children: (pending: ActionStatus) => ReactNode
 } & Omit<React.ComponentPropsWithoutRef<typeof FormPrimitive.Submit>, "children">
 
 export const FormSubmit = React.forwardRef<
   React.ElementRef<typeof FormPrimitive.Submit>,
   FormSubmitProps
 >(({ className, children, ...props }, ref) => {
-  const { pending } = useFormStatus()
+  const { status } = useForm()
 
   return (
     <FormPrimitive.Submit
       ref={ref}
       className={className}
-      disabled={pending}
+      disabled={status === "executing"}
       {...props}
       asChild
     >
-      {children(pending)}
+      {children(status)}
     </FormPrimitive.Submit>
   )
 })

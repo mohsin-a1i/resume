@@ -1,6 +1,6 @@
 import "../styles/globals.css"
 
-import { ThemeProvider } from "components/theme-provider"
+import { ThemeProvider } from "components/ui/theme-provider"
 import { Toaster } from "components/ui/toaster"
 import { cn } from "lib/cn"
 import { Viewport } from "next"

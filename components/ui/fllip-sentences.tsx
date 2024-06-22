@@ -22,35 +22,22 @@ export const FlipSentences = ({ className, sentences, duration = 4000 }: FlipSen
   useEffect(() => {
     const timeout = setTimeout(() => setSentence(null), duration)
     return () => clearTimeout(timeout)
-  }, [duration, selectSentence])
+  }, [index, duration])
 
   return (
     <AnimatePresence onExitComplete={selectSentence}>
       {sentence && <motion.span
         key={sentence}
         className={className}
-        transition={{
-          duration: 0.4,
-          ease: "easeInOut",
-          type: "spring",
-          stiffness: 100,
-          damping: 10,
-        }}
-        exit={{
-          opacity: 0,
-          filter: "blur(8px)",
-          scale: 1.5
-        }}
+        exit={{ opacity: 0, filter: "blur(8px)", scale: 1.5 }}
+        transition={{ duration: 0.3, ease: "linear" }}
       >
         {sentence.split("").map((letter, index) => (
           <motion.span
             key={`${sentence} ${index}`}
             initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{
-              delay: index * 0.08,
-              duration: 0.4,
-            }}
+            transition={{ delay: index * 0.06, duration: 0.3 }}
           >
             {letter}
           </motion.span>

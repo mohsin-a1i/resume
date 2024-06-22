@@ -1,7 +1,6 @@
 "use server"
 
-import { ActionState, setActionError, setActionMessage } from "lib/actions"
-import { errorMap } from "lib/zod/error-map"
+import { ActionBuilder } from "components/actions/builder"
 import z from "zod"
 
 const emailSchema = z.object({
@@ -12,12 +11,9 @@ const emailSchema = z.object({
   message: z.string().min(1, { message: "Need a brief introduction" })
 })
 
-export async function email(currentState: ActionState<typeof emailSchema>, actionData: FormData): Promise<ActionState<typeof emailSchema>> {
-  const { success, data, error } = emailSchema.safeParse(Object.fromEntries(actionData), { errorMap })
-  if (!success) return { error: error.format() }
-  const { name, email, message } = data
-
-  try {
+export const email = new ActionBuilder<typeof emailSchema>()
+  .schema(emailSchema)
+  .action(async ({ name, email, message }) => {
     const nodemailer = require("nodemailer")
 
     const transporter = nodemailer.createTransport({
@@ -33,12 +29,9 @@ export async function email(currentState: ActionState<typeof emailSchema>, actio
       to: process.env["EMAIL_USERNAME"],
       subject: "Contact Me",
       text: `name: ${name}\nemail: ${email}\nmessage: ${message}`
-    };
+    }
 
-    await transporter.sendMail(mailOptions)
+    //await transporter.sendMail(mailOptions)
 
-    return setActionMessage("Thanks for reaching out. Will get back to you soon!")
-  } catch (error) {
-    return setActionError((error as Error).message)
-  }
-}
+    await new Promise(resolve => setTimeout(resolve, 5000))
+  })

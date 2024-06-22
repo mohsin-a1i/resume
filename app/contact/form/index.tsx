@@ -3,12 +3,24 @@
 import { Button } from "components/ui/button"
 import { FormControl, FormField, FormLabel, FormMessage, FormRoot, FormSubmit } from "components/ui/form"
 import { LoadingSpinner } from "components/ui/loading-spinner"
+import { useToast } from "components/ui/use-toast"
 import { Send } from "lucide-react"
+import { useCallback } from "react"
 import { email } from "./actions/email"
 
 export const ContactForm = () => {
+  const { toast } = useToast()
+
+  const onSuccess = useCallback(() => {
+    toast({ description: "Thanks for reaching out. Will get back to you soon!" })
+  }, [toast])
+
   return (
-    <FormRoot className="mt-4 grid grid-cols-2 gap-4" action={email}>
+    <FormRoot
+      className="mt-4 grid grid-cols-2 gap-4"
+      action={email}
+      onSuccess={onSuccess}
+    >
       <FormField name='name' className="col-span-1">
         <FormLabel>Name</FormLabel>
         <FormControl placeholder="Name" />
@@ -27,9 +39,9 @@ export const ContactForm = () => {
         </FormMessage>
       </FormField>
       <FormSubmit className="col-span-2">
-        {(pending) => (
+        {(status) => (
           <Button>
-            {pending ? (<>
+            {status === "executing" ? (<>
               <LoadingSpinner className='mr-2 h-4 w-4' />
               <span>Sending</span>
             </>) : (<>
