@@ -1,7 +1,7 @@
 import "../styles/globals.css"
 
-import { ThemeProvider } from "components/ui/theme-provider"
-import { Toaster } from "components/ui/toaster"
+import { ThemeProvider } from "components/theme-provider"
+import { Toaster } from "components/toasts/toaster"
 import { cn } from "lib/cn"
 import { Viewport } from "next"
 import { Inter as FontSans } from "next/font/google"

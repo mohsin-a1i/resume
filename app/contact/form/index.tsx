@@ -1,9 +1,9 @@
 "use client"
 
-import { Button } from "components/ui/button"
-import { FormControl, FormField, FormLabel, FormMessage, FormRoot, FormSubmit } from "components/ui/form"
-import { LoadingSpinner } from "components/ui/loading-spinner"
-import { useToast } from "components/ui/use-toast"
+import { Button } from "components/button"
+import { FormControl, FormField, FormLabel, FormMessage, FormRoot, FormSubmit } from "components/form"
+import { LoadingSpinner } from "components/loading-spinner"
+import { useToast } from "components/toasts/use-toast"
 import { Send } from "lucide-react"
 import { useCallback } from "react"
 import { email } from "./actions/email"

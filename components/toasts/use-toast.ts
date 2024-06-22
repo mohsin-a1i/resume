@@ -6,7 +6,7 @@ import * as React from "react"
 import type {
   ToastActionElement,
   ToastProps,
-} from "components/ui/toast"
+} from "components/toasts/toast"
 import { useEffect } from "react"
 
 const TOAST_LIMIT = 1

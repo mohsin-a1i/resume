@@ -1,25 +1,32 @@
 "use client";
 
 import { FormControl, FormField, FormSubmit } from "@radix-ui/react-form";
+import { ActionStatus } from "components/actions/use-action";
+import { LoadingSpinner } from "components/loading-spinner";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "lib/cn";
 import { ArrowRightIcon } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 
-interface Pixel {
+type Pixel = {
   x: number,
   y: number,
   r: number,
   color: string
 }
 
-interface PlaceholdersInputProps {
+type ChatInputProps = {
   className: string
   name: string
   placeholders: string[]
+  status: ActionStatus
 }
 
-export function ChatInput({ className, name, placeholders }: PlaceholdersInputProps) {
+export type ChatInputRef = {
+  clear: () => void
+}
+
+export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(({ className, name, placeholders, status }, ref) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState("")
@@ -120,30 +127,37 @@ export function ChatInput({ className, name, placeholders }: PlaceholdersInputPr
     requestAnimationFrame(animateFrame)
   }, [value])
 
-  // useEffect(() => {
-  //   if (!pending) return
+  useImperativeHandle(ref, () => ({
+    clear: () => {
+      if (animating) return
+      setAnimating(true)
+      animateEvaporate(() => {
+        setAnimating(false)
+        setValue("")
+      })
+    }
+  }), [animateEvaporate, animating])
 
-  //   setAnimating(true)
-  //   animateEvaporate(() => setAnimating(false))
-  // }, [animateEvaporate, pending])
+  const waiting = status === "executing" || animating
 
   return (
-    <div
+    <motion.div
       className={cn(
         "h-12 bg-background border rounded-full p-2 flex items-center",
         className
       )}
+      layout
     >
       <FormField
         className="mx-2 relative grow"
         name={name}
       >
         <canvas
+          ref={canvasRef}
           className={cn(
             "absolute inset-0 w-full h-full pointer-events-none invert dark:invert-0",
             animating ? "opacity-100" : "opacity-0"
           )}
-          ref={canvasRef}
         />
         <FormControl
           ref={inputRef}
@@ -172,20 +186,14 @@ export function ChatInput({ className, name, placeholders }: PlaceholdersInputPr
           </AnimatePresence>
         </div>
       </FormField>
-      <AnimatePresence>
-        {value && <FormSubmit asChild>
-          <motion.button
-            key="sumbit"
-            className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "linear" }}
-          >
-            <ArrowRightIcon className="h-4 w-4" />
-          </motion.button>
-        </FormSubmit>}
-      </AnimatePresence>
-    </div>
+
+      <FormSubmit
+        className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center disabled:opacity-50"
+        disabled={!value || waiting}
+      >
+        {waiting ? <LoadingSpinner className="h-4 w-4" /> : <ArrowRightIcon className="h-4 w-4" />}
+      </FormSubmit>
+    </motion.div>
   );
-}
+})
+ChatInput.displayName = "ChatInput"

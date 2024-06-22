@@ -1,4 +1,4 @@
-import { NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot } from "components/ui/navigation-menu"
+import { NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuRoot } from "components/navigation-menu"
 import { Logo } from "./logo"
 
 export const Navigation = () => {

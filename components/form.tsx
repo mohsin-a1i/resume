@@ -6,7 +6,7 @@ import { ActionStatus, useAction } from "components/actions/use-action"
 import { cn } from "lib/cn"
 import _ from "lodash"
 import React, { ReactNode, createContext, useCallback, useContext, useEffect, useMemo, useRef } from "react"
-import { useToast } from "./use-toast"
+import { useToast } from "./toasts/use-toast"
 
 type FormContext = { status: ActionStatus, error?: { _errors: string[] } }
 const FormContext = createContext<FormContext>({ status: "idle" })
@@ -19,12 +19,12 @@ type FormRootProps = {
 } & Omit<React.ComponentPropsWithoutRef<typeof FormPrimitive.Root>, "action">
 
 export const FormRoot = (({ className, action, defaultData, onSuccess, children, ...props }: FormRootProps) => {
-  const ref = useRef<HTMLFormElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
   const { toast } = useToast()
 
   const { execute, status, validationErrors } = useAction(action, {
     onSuccess: (data) => {
-      ref.current?.reset()
+      formRef.current?.reset()
       onSuccess(data)
     },
     onServerError: (serverError) => {
@@ -36,7 +36,7 @@ export const FormRoot = (({ className, action, defaultData, onSuccess, children,
     if (!defaultData) return
 
     for (const [name, value] of Object.entries(defaultData)) {
-      const input = ref.current?.elements.namedItem(name)
+      const input = formRef.current?.elements.namedItem(name)
       if (!input) continue
       (input as HTMLInputElement).value = value
     }
@@ -45,7 +45,7 @@ export const FormRoot = (({ className, action, defaultData, onSuccess, children,
   return (
     <FormContext.Provider value={{ status, error: validationErrors }}>
       <FormPrimitive.Root
-        ref={ref}
+        ref={formRef}
         className={className}
         action={execute}
         {...props}

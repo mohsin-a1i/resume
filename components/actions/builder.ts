@@ -31,6 +31,7 @@ export class ActionBuilder<I extends z.Schema, D = any> {
       const data = await action(input, previousData)
       return { data }
     } catch (error) {
+      console.log(error)
       if (error instanceof ZodError) return { validationErrors: error.format() }
       return { serverError: (error as Error).message }
     }

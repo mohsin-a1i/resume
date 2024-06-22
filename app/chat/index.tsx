@@ -2,20 +2,27 @@
 
 import { Form } from "@radix-ui/react-form"
 import { useAction } from "components/actions/use-action"
-import { ChatInput } from "components/ui/chat-input"
 import { cn } from "lib/cn"
-import { FormEvent, useState } from "react"
+import { useRef, useState } from "react"
 import { Message, chat } from "./actions/chat"
+import { ChatInput, ChatInputRef } from "./input"
+import { ChatMessages } from "./messages"
 
 interface ChatProps {
   className?: string
 }
 
 export const Chat = ({ className }: ChatProps) => {
+  const inputRef = useRef<ChatInputRef>(null)
   const [messages, setMessages] = useState<Message[]>([])
-  const { execute } = useAction(chat, {
+
+  const { execute, status } = useAction(chat, {
+    onExecute: (messages: Message[]) => {
+      setMessages(messages)
+      inputRef.current?.clear()
+    },
     onSuccess: (message) => {
-      setMessages(messages => [...messages.slice(0, -1), message])
+      setMessages(messages => [...messages, message])
     }
   })
 
@@ -25,31 +32,18 @@ export const Chat = ({ className }: ChatProps) => {
         Digital Me
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">Want to ask something quick? Talk to a digital version of me</p>
-      <div className="mt-4 flex flex-col">
-        <div className="m-2 self-start bg-card border rounded-full rounded-bl-none py-2 px-4 text-sm">
-          Hi! What would you like to know?
-        </div>
-        {messages.map((message, index) => (
-          <div key={index} className={cn(
-            "m-2 self-end bg-card border rounded-full py-2 px-4 text-sm",
-            message.role === "user" ? "self-end rounded-br-none" : "self-start rounded-bl-none"
-          )}>
-            {message.content}
-          </div>
-        ))}
-      </div>
-      <Form
-        onSubmit={(event: FormEvent) => {
-          const formData = new FormData(event.target as HTMLFormElement)
-
-          const message = { role: "user", content: formData.get("message") } as Message
-          const assistantMessage = { role: "assistant", content: "..." } as Message
-          setMessages(messages => [...messages, message, assistantMessage])
-
-          execute(formData)
-        }}
-      >
+      <ChatMessages
+        className="mt-4"
+        messages={messages}
+        status={status}
+      />
+      <Form action={(formData) => {
+        const message = { role: "user", content: formData.get("message") } as Message
+        const previousMessages = status === "errored" ? messages.slice(0, -1) : messages
+        execute([...previousMessages, message])
+      }}>
         <ChatInput
+          ref={inputRef}
           className='mt-4'
           name="message"
           placeholders={[
@@ -57,6 +51,7 @@ export const Chat = ({ className }: ChatProps) => {
             "Do you speak spanish?",
             "How many years of expirence do you have?"
           ]}
+          status={status}
         />
       </Form>
     </section>

@@ -35,6 +35,7 @@ type UseStateActionReturn<I extends z.Schema, D> = {
 })
 
 type Callbacks<I extends z.Schema, D> = {
+  onExecute?: (input: z.infer<I>) => void
   onSuccess?: (data: D, input: z.infer<I>) => void
   onValidationError?: (error: ValidationErrors, input: z.infer<I>) => void
   onServerError?: (error: string, input: z.infer<I>) => void
@@ -42,7 +43,7 @@ type Callbacks<I extends z.Schema, D> = {
 
 export const useAction = <I extends z.Schema, D>(
   action: (state: ActionState<D>, input: FormData | z.infer<I>) => Promise<ActionState<D>>,
-  { onSuccess, onValidationError, onServerError }: Callbacks<I, D>
+  { onExecute, onSuccess, onValidationError, onServerError }: Callbacks<I, D>
 ): UseStateActionReturn<I, D> => {
   const [state, stateAction] = useFormState<ActionState<D>, FormData>(action, {})
   const [status, setStatus] = useState<ActionStatus>("idle")
@@ -51,14 +52,15 @@ export const useAction = <I extends z.Schema, D>(
   const [serverError, setServerError] = useState<string>()
 
   const execute = useCallback((input: FormData | z.infer<I>) => {
-    stateAction(input)
     flushSync(() => {
       setInput(input)
       setStatus("executing")
       setValidationErrors(undefined)
       setServerError(undefined)
+      if (onExecute) onExecute(input)
     })
-  }, [stateAction])
+    stateAction(input)
+  }, [onExecute, stateAction])
 
   useEffect(() => {
     if (status !== "executing") return

@@ -1,4 +1,4 @@
-import { FlipSentences } from "components/ui/fllip-sentences";
+import { FlipSentences } from "components/fllip-sentences";
 import { cn } from "lib/cn";
 
 interface IntroductionProps {
