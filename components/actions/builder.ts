@@ -20,8 +20,8 @@ export class ActionBuilder<I extends z.Schema, D = any> {
   }
 
   action(action: Action<I, D>) {
-    return async (state: ActionState<D>, input: FormData) => {
-      return this.execute(action, Object.fromEntries(input), state.data as D)
+    return async (state: ActionState<D>, input: FormData | z.infer<I>) => {
+      return this.execute(action, input instanceof FormData ? Object.fromEntries(input) : input, state.data as D)
     }
   }
 

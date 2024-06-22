@@ -40,13 +40,13 @@ export const Chat = ({ className }: ChatProps) => {
       </div>
       <Form
         onSubmit={(event: FormEvent) => {
-          const payload = new FormData(event.target as HTMLFormElement)
+          const formData = new FormData(event.target as HTMLFormElement)
 
-          const message = { role: "user", content: payload.get("message") } as Message
+          const message = { role: "user", content: formData.get("message") } as Message
           const assistantMessage = { role: "assistant", content: "..." } as Message
           setMessages(messages => [...messages, message, assistantMessage])
 
-          execute(payload)
+          execute(formData)
         }}
       >
         <ChatInput

@@ -5,8 +5,8 @@ import { ActionState, ValidationErrors } from "./builder"
 
 export type ActionStatus = "idle" | "executing" | "succeeded" | "errored"
 
-type UseStateActionReturn<D> = {
-  execute: (input: FormData) => void
+type UseStateActionReturn<I extends z.Schema, D> = {
+  execute: (input: FormData | z.infer<I>) => void
 } & ({
   status: "idle"
   data: undefined,
@@ -41,16 +41,16 @@ type Callbacks<I extends z.Schema, D> = {
 }
 
 export const useAction = <I extends z.Schema, D>(
-  action: (state: ActionState<D>, input: FormData) => Promise<ActionState<D>>,
+  action: (state: ActionState<D>, input: FormData | z.infer<I>) => Promise<ActionState<D>>,
   { onSuccess, onValidationError, onServerError }: Callbacks<I, D>
-): UseStateActionReturn<D> => {
+): UseStateActionReturn<I, D> => {
   const [state, stateAction] = useFormState<ActionState<D>, FormData>(action, {})
   const [status, setStatus] = useState<ActionStatus>("idle")
   const [input, setInput] = useState<z.infer<I>>()
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>()
   const [serverError, setServerError] = useState<string>()
 
-  const execute = useCallback((input: FormData) => {
+  const execute = useCallback((input: FormData | z.infer<I>) => {
     stateAction(input)
     flushSync(() => {
       setInput(input)
@@ -86,5 +86,5 @@ export const useAction = <I extends z.Schema, D>(
     data: state.data,
     validationErrors,
     serverError
-  } as UseStateActionReturn<D>
+  } as UseStateActionReturn<I, D>
 }
