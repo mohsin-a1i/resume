@@ -34,7 +34,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         >
           <div className="absolute -z-50 pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
           <Header />
-          <main className='pb-14'>
+          <main className='pb-48'>
             {children}
           </main>
           <Footer />

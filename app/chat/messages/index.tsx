@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { cn } from "lib/cn"
 import { CircleAlertIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
-import { Message } from "./actions/chat"
+import { Message } from "../actions/chat"
 import { ChatBubble } from "./bubble"
 
 type ChatMessagesProps = {

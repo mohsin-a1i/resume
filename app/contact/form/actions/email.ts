@@ -31,7 +31,5 @@ export const email = new ActionBuilder<typeof emailSchema>()
       text: `name: ${name}\nemail: ${email}\nmessage: ${message}`
     }
 
-    //await transporter.sendMail(mailOptions)
-
-    await new Promise(resolve => setTimeout(resolve, 5000))
+    await transporter.sendMail(mailOptions)
   })

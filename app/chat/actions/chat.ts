@@ -15,6 +15,6 @@ const chatSchema = z.array(messageSchema)
 export const chat = new ActionBuilder<typeof chatSchema, Message>()
   .schema(chatSchema)
   .action(async (messages) => {
-    await new Promise(resolve => setTimeout(resolve, 5000))
+    await new Promise(resolve => setTimeout(resolve, 3000))
     return { role: "assistant", content: "Sorry I cant help you with that" }
   })
