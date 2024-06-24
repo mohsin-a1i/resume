@@ -6,7 +6,7 @@ type ChatBubbleProps = {
   type?: "user" | "assistant" | "system" | "error"
 }
 
-export const ChatBubble = ({ className, type = "assistant", children }: React.PropsWithChildren<ChatBubbleProps>) => {
+export const MessageBubble = ({ className, type = "assistant", children }: React.PropsWithChildren<ChatBubbleProps>) => {
   return (
     <motion.div
       className={cn(

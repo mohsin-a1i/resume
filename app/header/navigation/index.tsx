@@ -11,6 +11,11 @@ export const Navigation = () => {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
+          <NavigationMenuLink href='#skills'>
+            Expertise
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuLink href='#chat'>
             Digital Me
           </NavigationMenuLink>

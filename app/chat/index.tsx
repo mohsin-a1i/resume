@@ -29,7 +29,7 @@ export const Chat = ({ className }: ChatProps) => {
   return (
     <section id='chat' className={cn("m-auto max-w-xl p-6", className)}>
       <h3 className="text-2xl font-semibold tracking-tight">
-        Digital Me
+        Talk To Digital Me
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">Want to ask something quick? Talk to a digital version of me</p>
       <ChatMessages

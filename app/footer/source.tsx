@@ -1,7 +1,7 @@
 import { Button } from "components/button"
 import Link from "next/link"
 
-export const SourceLink = () => {
+export const Source = () => {
   return (
     <p className="text-sm">
       <span className="text-muted-foreground">Find the source at </span>

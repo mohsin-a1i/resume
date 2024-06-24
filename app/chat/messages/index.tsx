@@ -5,7 +5,7 @@ import { cn } from "lib/cn"
 import { CircleAlertIcon } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { Message } from "../actions/chat"
-import { ChatBubble } from "./bubble"
+import { MessageBubble } from "./bubble"
 
 type ChatMessagesProps = {
   className: string
@@ -27,24 +27,24 @@ export const ChatMessages = ({ className, messages, status }: ChatMessagesProps)
       className={cn("max-h-96 flex flex-col overflow-y-scroll", className)}
       layout
     >
-      <ChatBubble>
+      <MessageBubble>
         Hi! What would you like to know?
-      </ChatBubble>
+      </MessageBubble>
       {messages.map((message, index) => (
-        <ChatBubble key={index} type={message.role}>
+        <MessageBubble key={index} type={message.role}>
           {message.content}
-        </ChatBubble>
+        </MessageBubble>
       ))}
       {status === "executing" ? (
-        <ChatBubble className="w-[70%] space-y-2">
+        <MessageBubble className="w-[70%] space-y-2">
           <Skeleton className="w-full h-4" />
           <Skeleton className="w-[70%] h-4" />
-        </ChatBubble>
+        </MessageBubble>
       ) : status === "errored" ? (
-        <ChatBubble className="flex items-center gap-2" type="error">
+        <MessageBubble className="flex items-center gap-2" type="error">
           <CircleAlertIcon className="w-4 h-4" />
           <span>Something went wrong</span>
-        </ChatBubble>
+        </MessageBubble>
       ) : null}
     </motion.div>
   )

@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "components/button"
-import { FormControl, FormField, FormLabel, FormMessage, FormRoot, FormSubmit } from "components/form"
+import { FormControl, FormField, FormLabel, FormRoot, FormSubmit } from "components/form"
 import { LoadingSpinner } from "components/loading-spinner"
 import { useToast } from "components/toasts/use-toast"
 import { Send } from "lucide-react"
@@ -32,11 +32,11 @@ export const ContactForm = () => {
       <FormField name='message' className="col-span-2">
         <FormLabel>Message</FormLabel>
         <FormControl asChild>
-          <textarea rows={3} />
+          <textarea
+            placeholder="I am looking for..."
+            rows={3}
+          />
         </FormControl>
-        <FormMessage>
-          A brief introduction of yourself
-        </FormMessage>
       </FormField>
       <FormSubmit className="col-span-2">
         {(status) => (
