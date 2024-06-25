@@ -1,6 +1,7 @@
 import { DiscordIcon } from "components/icons/discord";
 import { GithubIcon } from "components/icons/github";
-import { LinkedinIcon } from "components/icons/linkedin";
+import { LinkedInIcon } from "components/icons/linkedin";
+import { StackOverFlowIcon } from "components/icons/stackoverflow";
 import { PlatformLink } from "./link";
 
 type PlatformLinksProps = {
@@ -21,7 +22,10 @@ export const Platforms = ({ className }: PlatformLinksProps) => {
           <GithubIcon className="h-4 w-4" />
         </PlatformLink>
         <PlatformLink href='https://linkedin.com/in/mohsina1i'>
-          <LinkedinIcon className="h-4 w-4" />
+          <LinkedInIcon className="h-4 w-4" />
+        </PlatformLink>
+        <PlatformLink href="https://stackoverflow.com/users/5286038/mohsin-ali'">
+          <StackOverFlowIcon className="h-4 w-4" />
         </PlatformLink>
         <PlatformLink href="https://discord.com/users/456154510587592705">
           <DiscordIcon className="h-4 w-4" />

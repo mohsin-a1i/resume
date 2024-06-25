@@ -1,12 +1,13 @@
-import { cn } from "lib/cn"
-import { SearchIcon } from "lucide-react"
-import { Bubbles } from "./bubbles"
+import { cn } from "lib/cn";
+import { SearchIcon } from "lucide-react";
+import dynamic from "next/dynamic";
+const SkillsGraph = dynamic(() => import("./graph"), { ssr: false })
 
 interface SkillsProps {
   className?: string
 }
 
-export const Skills = ({ className }: SkillsProps) => {
+export const Skills = async ({ className }: SkillsProps) => {
   return (
     <section id='skills' className={cn("m-auto max-w-xl p-6", className)}>
       <h3 className="text-2xl font-semibold tracking-tight">
@@ -16,11 +17,11 @@ export const Skills = ({ className }: SkillsProps) => {
       <div className="mt-6 bg-background border border-input rounded-full ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 px-3 py-2 flex items-center gap-2">
         <SearchIcon className="w-4 h-4 text-muted-foreground" />
         <input
-          className="w-full text-sm outline-none file:border-none file:bg-transparent file:text-sm file:py-0 placeholder:text-muted-foreground"
+          className="w-full bg-transparent text-sm outline-none file:border-none file:bg-transparent file:text-sm file:py-0 placeholder:text-muted-foreground"
           placeholder="Search"
         />
       </div>
-      <Bubbles />
+      <SkillsGraph className="mt-6" />
     </section>
   )
 }
