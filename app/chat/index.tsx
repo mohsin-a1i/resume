@@ -47,9 +47,10 @@ export const Chat = ({ className }: ChatProps) => {
           className='mt-4'
           name="message"
           placeholders={[
-            "Have you worked with Kafka?",
-            "Do you speak spanish?",
-            "How many years of expirence do you have?"
+            "Where do you currently work?",
+            "Do you speak Urdu?",
+            "How many years of expirence do you have?",
+            "What was your last role?"
           ]}
           status={status}
         />

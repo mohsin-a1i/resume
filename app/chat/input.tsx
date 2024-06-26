@@ -3,7 +3,8 @@
 import { FormControl, FormField, FormSubmit } from "@radix-ui/react-form";
 import { ActionStatus } from "components/actions/use-action";
 import { LoadingSpinner } from "components/loading-spinner";
-import { AnimatePresence, motion } from "framer-motion";
+import { Placeholders } from "components/placeholders";
+import { motion } from "framer-motion";
 import { cn } from "lib/cn";
 import { ArrowRightIcon } from "lucide-react";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
@@ -31,19 +32,6 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(({ className, 
   const inputRef = useRef<HTMLInputElement>(null)
   const [value, setValue] = useState("")
   const [animating, setAnimating] = useState(false)
-  const [placeholderIndex, setPlaceholderIndex] = useState(0)
-  const [placeholder, setPlaceholder] = useState<string | null>(placeholders[placeholderIndex])
-
-  const selectPlaceholder = useCallback(() => {
-    const i = (placeholderIndex + 1) % placeholders.length
-    setPlaceholderIndex(i)
-    setPlaceholder(placeholders[i])
-  }, [placeholderIndex, placeholders])
-
-  useEffect(() => {
-    const timeout = setTimeout(() => setPlaceholder(null), 4000)
-    return () => clearTimeout(timeout)
-  }, [placeholderIndex])
 
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement
@@ -170,23 +158,9 @@ export const ChatInput = forwardRef<ChatInputRef, ChatInputProps>(({ className, 
           onChange={(e) => setValue(e.target.value)}
         />
         <div className="absolute inset-0 pointer-events-none flex items-center">
-          <AnimatePresence onExitComplete={selectPlaceholder}>
-            {!value && (
-              <motion.p
-                key={placeholder}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.3, ease: "linear" }}
-                className="text-sm text-muted-foreground"
-              >
-                {placeholder}
-              </motion.p>
-            )}
-          </AnimatePresence>
+          <Placeholders placeholders={placeholders} show={!value} />
         </div>
       </FormField>
-
       <FormSubmit
         className="h-8 w-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center disabled:opacity-50"
         disabled={!value || waiting}

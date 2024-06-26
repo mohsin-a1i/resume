@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 
 type DataNode = {
   id: string
-  name?: string
+  label?: string
   x?: number
   y?: number
   size?: number
@@ -14,35 +14,46 @@ type DataNode = {
 
 const dataNode: DataNode = {
   id: "skills",
+  label: "Skills",
+  image: "icons/stars.svg",
   children: [
     {
       id: "frontend",
+      label: "Front End",
+      image: "icons/frontend.svg",
       children: [
-        { id: "ReactJS" },
-        { id: "nextjs" }
+        { id: "reactjs", label: "ReactJS", image: "icons/react.svg" },
+        { id: "nextjs", label: "NextJS", image: "icons/next.svg" },
+        { id: "flutter", label: "Flutter", image: "icons/flutter.svg" }
       ]
     },
     {
       id: "backend",
+      label: "Back End",
+      image: "icons/backend.svg",
       children: [
-        { id: "nodejs" },
-        { id: "spring" }
+        { id: "nodejs", label: "NodeJS", image: "icons/node.svg" },
+        { id: "spring", label: "Spring", image: "icons/spring.svg" }
       ]
     },
     {
       id: "databases",
+      label: "Databases",
+      image: "icons/database.svg",
       children: [
         { id: "mysql", image: "icons/mysql.svg" },
-        { id: "postgres", name: "Postgres", image: "icons/postgres.svg" },
-        { id: "dynamodb", name: "DynamoDB" },
-        { id: "neo4j" }
+        { id: "postgres", label: "Postgres", image: "icons/postgres.svg" },
+        { id: "dynamodb", label: "DynamoDB", image: "icons/database.svg", },
+        { id: "neo4j", label: "Neo4J", image: "icons/neo4j.svg" }
       ]
     },
     {
-      id: "data-streams",
+      id: "streams",
+      label: "Streaming",
+      image: "icons/data-stream.svg",
       children: [
-        { id: "kafka" },
-        { id: "rabbitmq" }
+        { id: "kafka", label: "Kafka", image: "icons/kafka.svg" },
+        { id: "rabbitmq", label: "RabbitMQ", image: "icons/rabbitmq.svg" }
       ]
     }
   ]
@@ -53,7 +64,7 @@ export type GraphNode = {
   x?: number
   y?: number
   size: number
-  name?: string
+  label?: string
   image?: HTMLImageElement
 }
 
@@ -90,8 +101,8 @@ export const useGraphData = () => {
     return image
   }, [])
 
-  const createGraphNode = useCallback(async ({ id, x, y, size, name, image }: DataNode) => {
-    const graphNode: GraphNode = { id, x, y, name, size: size || 12 }
+  const createGraphNode = useCallback(async ({ id, x, y, size, label, image }: DataNode) => {
+    const graphNode: GraphNode = { id, x, y, label, size: size || 12 }
 
     if (image) graphNode.image = await createHTMLImageElement(image, graphNode.size - 1)
 
