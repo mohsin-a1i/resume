@@ -41,7 +41,7 @@ const dataNode: DataNode = {
       label: "Databases",
       image: "icons/database.svg",
       children: [
-        { id: "mysql", image: "icons/mysql.svg" },
+        { id: "mysql", label: "MySQL", image: "icons/mysql.svg" },
         { id: "postgres", label: "Postgres", image: "icons/postgres.svg" },
         { id: "dynamodb", label: "DynamoDB", image: "icons/database.svg", },
         { id: "neo4j", label: "Neo4J", image: "icons/neo4j.svg" }
