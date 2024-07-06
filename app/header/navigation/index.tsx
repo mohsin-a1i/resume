@@ -15,7 +15,11 @@ import { Logo } from "./logo"
 export const Navigation = () => {
   return (
     <>
-      <Drawer noBodyStyles={true}>
+      <Drawer
+        noBodyStyles={true}
+        shouldScaleBackground={false}
+        disablePreventScroll={true}
+      >
         <DrawerTrigger className={cn("md:hidden", buttonVariants({ variant: "outline", size: "icon" }))}>
           <MenuIcon />
         </DrawerTrigger>
