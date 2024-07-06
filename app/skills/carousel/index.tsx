@@ -8,6 +8,7 @@ type SkillsCarouselProps = {
 export const SkillsCarousel = ({ className }: SkillsCarouselProps) => {
   return (
     <Carousel className={className}>
+      <CarouselPrevious />
       <CarouselContent className="space-x-2">
         {skills.map(skill => (
           <CarouselItem key={skill.id} className="basis-1/3 border boder-border rounded-md p-3 flex flex-col items-center gap-2">
@@ -16,7 +17,6 @@ export const SkillsCarousel = ({ className }: SkillsCarouselProps) => {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
       <CarouselNext />
     </Carousel>
 
