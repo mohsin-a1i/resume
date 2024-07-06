@@ -7,6 +7,7 @@ import { Viewport } from "next"
 import { Inter as FontSans } from "next/font/google"
 import { Footer } from "./footer"
 import { Header } from "./header"
+import { Platforms } from "./platforms"
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -34,9 +35,10 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         >
           <div className="absolute -z-50 pointer-events-none inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
           <Header />
-          <main className='pb-48'>
+          <main className='pb-10'>
             {children}
           </main>
+          <Platforms className="fixed top-1/3 right-4 hidden md:flex flex-col" />
           <Footer />
           <Toaster />
         </ThemeProvider>

@@ -1,7 +1,6 @@
 import { cn } from "lib/cn";
-import dynamic from "next/dynamic";
+import { SkillsCarousel } from "./carousel";
 import { Search } from "./search";
-const SkillsGraph = dynamic(() => import("./graph"), { ssr: false })
 
 interface SkillsProps {
   className?: string
@@ -23,7 +22,7 @@ export const Skills = async ({ className }: SkillsProps) => {
           "Data engineering"
         ]}
       />
-      <SkillsGraph className="mt-6" />
+      <SkillsCarousel />
     </section>
   )
 }

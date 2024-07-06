@@ -5,7 +5,7 @@ import * as d3 from "d3-force"
 import { useTheme } from "next-themes"
 import { useEffect, useRef } from "react"
 import ForceGraph2D, { ForceGraphMethods } from "react-force-graph-2d"
-import { GraphNode, useGraphData } from "./data"
+import { GraphNode, useGraphData } from "../carousel/data"
 
 type SimulationNode = GraphNode & d3.SimulationNodeDatum & {
   x: number
