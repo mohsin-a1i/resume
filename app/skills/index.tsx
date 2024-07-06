@@ -22,7 +22,7 @@ export const Skills = async ({ className }: SkillsProps) => {
           "Data engineering"
         ]}
       />
-      <SkillsCarousel />
+      <SkillsCarousel className="mx-auto mt-6 w-4/5" />
     </section>
   )
 }
