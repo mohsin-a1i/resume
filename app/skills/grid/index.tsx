@@ -13,7 +13,7 @@ export const SkillsGrid = ({ className }: SkillsCarouselProps) => {
           {skills.map((skill) => (
             <div key={skill.id} className="border boder-border rounded-md p-3 flex flex-col items-center gap-2">
               <skill.icon className="w-14 h-14" />
-              <p className="text-sm">{skill.label}</p>
+              <p className="text-sm text-center">{skill.label}</p>
             </div>
           ))}
         </div>
