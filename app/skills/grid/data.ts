@@ -23,32 +23,22 @@ type Skill = {
   icon: ComponentType<SVGProps<SVGSVGElement>>
 }
 
-export const skills: Record<string, Skill[]> = {
-  "frontend": [
-    { id: "reactjs", label: "ReactJS", icon: ReactIcon },
-    { id: "nextjs", label: "NextJS", icon: NextIcon },
-    { id: "flutter", label: "Flutter", icon: FlutterIcon },
-    { id: "android-studio", label: "Android Studio", icon: AndroidStudioIcon }
-  ],
-  "backend": [
-    { id: "nodejs", label: "NodeJS", icon: NodeIcon },
-    { id: "spring", label: "Spring", icon: SpringIcon },
-    { id: "fast-api", label: "Fast API", icon: FastAPIIcon },
-  ],
-  "database": [
-    { id: "mysql", label: "MySQL", icon: MySQLIcon },
-    { id: "postgres", label: "Postgres", icon: PostgresIcon },
-    { id: "dynamodb", label: "DynamoDB", icon: DatabaseIcon },
-    { id: "neo4j", label: "Neo4J", icon: Neo4JIcon },
-  ],
-  "data-engineering": [
-    { id: "kafka", label: "Kafka", icon: KafkaIcon },
-    { id: "rabbitmq", label: "RabbitMQ", icon: RabbitMQIcon }
-  ],
-  "devops": [
-    { id: "aws", label: "Amazon Web Services", icon: AWSIcon },
-    { id: "azure", label: "Azure", icon: AzureIcon },
-    { id: "docker", label: "Docker", icon: DockerIcon },
-    { id: "kubernetes", label: "Kubernetes", icon: KubernetesIcon }
-  ]
-}
+export const skills: Skill[] = [
+  { id: "reactjs", label: "ReactJS", icon: ReactIcon },
+  { id: "nextjs", label: "NextJS", icon: NextIcon },
+  { id: "flutter", label: "Flutter", icon: FlutterIcon },
+  { id: "android-studio", label: "Android Studio", icon: AndroidStudioIcon },
+  { id: "nodejs", label: "NodeJS", icon: NodeIcon },
+  { id: "spring", label: "Spring", icon: SpringIcon },
+  { id: "fast-api", label: "Fast API", icon: FastAPIIcon },
+  { id: "mysql", label: "MySQL", icon: MySQLIcon },
+  { id: "postgres", label: "Postgres", icon: PostgresIcon },
+  { id: "dynamodb", label: "DynamoDB", icon: DatabaseIcon },
+  { id: "neo4j", label: "Neo4J", icon: Neo4JIcon },
+  { id: "kafka", label: "Kafka", icon: KafkaIcon },
+  { id: "rabbitmq", label: "RabbitMQ", icon: RabbitMQIcon },
+  { id: "aws", label: "Amazon Web Services", icon: AWSIcon },
+  { id: "azure", label: "Azure", icon: AzureIcon },
+  { id: "docker", label: "Docker", icon: DockerIcon },
+  { id: "kubernetes", label: "Kubernetes", icon: KubernetesIcon }
+]
