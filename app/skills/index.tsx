@@ -1,5 +1,4 @@
 import { cn } from "lib/cn";
-import { SkillsGrid } from "./grid";
 import { Search } from "./search";
 
 interface SkillsProps {
@@ -22,7 +21,7 @@ export const Skills = async ({ className }: SkillsProps) => {
           "Data engineering"
         ]}
       />
-      <SkillsGrid className="mt-6" />
+      {/* <SkillsGrid className="mt-6" /> */}
     </section>
   )
 }
